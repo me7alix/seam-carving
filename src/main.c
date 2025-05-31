@@ -205,10 +205,16 @@ int main(int argc, char **argv) {
 		printf("ITERS must be greater than 0\n");
 		exit(0);
 	}
-
+	
 	Image pimg = image_from_bmp(input_file);
 	Image nimg = image_alloc(pimg.width, pimg.height);
 	Image bimg;
+
+	if (iters >= (int)fmin(pimg.height, pimg.width)) {
+		printf("ITERS must be smaller than the image size\n");
+		exit(0);
+	}
+
 
 	size_t *res = malloc((int)fmax(pimg.height, pimg.width) * sizeof(size_t));
 	float *sbl = malloc(pimg.width * pimg.height * sizeof(float));
