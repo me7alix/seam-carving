@@ -238,6 +238,8 @@ int main(int argc, char **argv) {
 	}
 
 	image_to_bmp(pimg, output_file);
+	image_free(pimg);
+	image_free(nimg);
 	free(sbl);
 	free(res);
 	return 0;
