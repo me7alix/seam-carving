@@ -37,8 +37,7 @@ void image_to_bmp(Image image, char *file) {
         'B','M',
         (unsigned char)(filesize      ), (unsigned char)(filesize >>  8),
         (unsigned char)(filesize >> 16), (unsigned char)(filesize >> 24),
-        0,0, 0,0,
-        54,0,0,0
+        0,0,0,0,54,0,0,0
     };
     uint8_t ih[40] = {
         40,0,0,0,
@@ -46,13 +45,8 @@ void image_to_bmp(Image image, char *file) {
         (unsigned char)(w >> 16), (unsigned char)(w >> 24),
         (unsigned char)(h      ), (unsigned char)(h >>  8),
         (unsigned char)(h >> 16), (unsigned char)(h >> 24),
-        1,0,
-        24,0,
-        0,0,0,0,
-        0,0,0,0,
-        19,11,0,0,  19,11,0,0,
-        0,0,0,0,
-        0,0,0,0
+        1,0,24,0,0,0,0,0,0,0,0,0,19,11,0,0,19,11,0,0,0,0,0,
+		0,0,0,0,0
     };
 
     FILE *f = fopen(file, "wb");
@@ -110,11 +104,6 @@ Image image_from_bmp(char *file) {
     size_t w = (size_t)width;
     size_t h = (size_t)height;
     Color *pixels = (Color *)malloc(sizeof(Color) * w * h);
-    if (!pixels) {
-        perror("malloc");
-        fclose(f);
-        return (Image){ 0, 0, NULL };
-    }
 
     int32_t row_padded = (width * 3 + 3) & ~3;
 
@@ -152,25 +141,25 @@ Image image_from_bmp(char *file) {
                 perror("fread padding");
                 free(pixels);
                 fclose(f);
-                return (Image){ 0, 0, NULL };
+				exit(1);
             }
         }
     }
 
     fclose(f);
 
-    Image out_img;
-    out_img.width  = w;
-    out_img.height = h;
-    out_img.pixels = pixels;
-    return out_img;
+    return (Image) {
+		.width = w,
+		.height = h,
+		.pixels = pixels,
+	};
 }
 
 Image image_alloc(size_t width, size_t height) {
 	return (Image) {
 		.width = width,
 		.height = height,
-		.pixels = (Color *) malloc(sizeof(Color) * width * height),
+		.pixels = (Color *)malloc(sizeof(Color) * width * height),
 	};
 }
 
