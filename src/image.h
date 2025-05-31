@@ -138,7 +138,7 @@ Image image_from_bmp(char *file) {
                 perror("fread pixel data");
                 free(pixels);
                 fclose(f);
-                return (Image){ 0, 0, NULL };
+				exit(1);
             }
 
             row_ptr[col].b = buffer[0];
