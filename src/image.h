@@ -158,8 +158,8 @@ Image image_from_bmp(char *file) {
 Image image_alloc(size_t width, size_t height) {
 	return (Image) {
 		.width = width,
-			.height = height,
-			.pixels = (Color *)malloc(sizeof(Color) * width * height),
+		.height = height,
+		.pixels = (Color *)malloc(sizeof(Color) * width * height),
 	};
 }
 

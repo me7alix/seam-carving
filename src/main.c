@@ -208,7 +208,7 @@ int main(int argc, char **argv) {
 	
 	Image pimg = image_from_bmp(input_file);
 	Image nimg = image_alloc(pimg.width, pimg.height);
-	Image bimg;
+	Color *pimg_pixels;
 
 	if (iters >= (int)fmin(pimg.height, pimg.width)) {
 		printf("ITERS must be smaller than the image size\n");
@@ -224,17 +224,17 @@ int main(int argc, char **argv) {
 		sbl_find_minimal_column(sbl, pimg.height, pimg.width, res);
 		image_remove_column(pimg, &nimg, res);
 
-		bimg = pimg;
+		pimg_pixels = pimg.pixels;
 		pimg = nimg;
-		nimg = pimg;
+		nimg.pixels = pimg_pixels;
 
 		sbl_from_image(pimg, sbl);
 		sbl_find_minimal_row(sbl, pimg.height, pimg.width, res);
 		image_remove_row(pimg, &nimg, res);
 
-		bimg = pimg;
+		pimg_pixels = pimg.pixels;
 		pimg = nimg;
-		nimg = pimg;
+		nimg.pixels = pimg_pixels;	
 	}
 
 	image_to_bmp(pimg, output_file);
