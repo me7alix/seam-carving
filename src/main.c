@@ -41,11 +41,11 @@ void sbl_from_image(Image orig, float *res) {
 						A[(i+1)*3+(j+1)] = COLOR_GRAYSCALE(IMAGE_AT(orig, nx+1, ny));
 					else if (ny < 0)
 						A[(i+1)*3+(j+1)] = COLOR_GRAYSCALE(IMAGE_AT(orig, nx, ny+1));
-					else if (ny > orig.height && nx > orig.width)
+					else if (ny >= orig.height && nx >= orig.width)
 						A[(i+1)*3+(j+1)] = COLOR_GRAYSCALE(IMAGE_AT(orig, nx-1, ny-1));
-					else if (nx > orig.width)
+					else if (nx >= orig.width)
 						A[(i+1)*3+(j+1)] = COLOR_GRAYSCALE(IMAGE_AT(orig, nx-1, ny));
-					else if (ny > orig.height)
+					else if (ny >= orig.height)
 						A[(i+1)*3+(j+1)] = COLOR_GRAYSCALE(IMAGE_AT(orig, nx, ny-1));
 					else
 						A[(i+1)*3+(j+1)] = COLOR_GRAYSCALE(IMAGE_AT(orig, nx, ny));
